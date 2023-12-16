@@ -139,3 +139,4 @@ int main()
     ordenar(quantidadeValidos, ITEM_LEN, cpfsValidos, 0, quantidadeValidos - 1);
     mostrar(quantidadeValidos, ITEM_LEN, cpfsValidos);
 }
+

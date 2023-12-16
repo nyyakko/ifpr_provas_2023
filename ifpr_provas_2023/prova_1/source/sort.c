@@ -2,33 +2,24 @@
 
 #include "sort.h"
 
-// protótipos de funções de suporte (usadas somente neste código fonte)
 // =============================================================================
 //
 // NÃO ALTERE ABSOLUTAMENTE NADA NOS CABEÇALHOS (ASSINATURAS) DAS FUNÇÕES
 //
 // =============================================================================
 
-int particionar(int quantidadeStrings, int tamanhoString, char strings[quantidadeStrings][tamanhoString], int inicio, int fim);
-void trocar(int tamanhoString, char stringA[tamanhoString], char stringB[tamanhoString]);
-
-// =============================================================================
-//
-// NÃO ALTERE ABSOLUTAMENTE NADA NOS CABEÇALHOS (ASSINATURAS) DAS FUNÇÕES
-//
-// =============================================================================
-
-void ordenar(int quantidadeStrings, int tamanhoStrings, char strings[quantidadeStrings][tamanhoStrings], int inicio, int fim)
+static void trocar(int tamanhoString, char stringA[tamanhoString], char stringB[tamanhoString])
 {
-    if (inicio < fim)
-    {
-        int i = particionar(quantidadeStrings, tamanhoStrings, strings, inicio, fim);
-        ordenar(quantidadeStrings, tamanhoStrings, strings, inicio, i - 1);
-        ordenar(quantidadeStrings, tamanhoStrings, strings, i + 1, fim);
-    }
+    char temporario[tamanhoString];
+
+    memset(temporario, 0, (size_t)tamanhoString);
+
+    memcpy(&temporario, stringA, (size_t)tamanhoString);
+    memcpy(stringA, stringB, (size_t)tamanhoString);
+    memcpy(stringB, temporario, (size_t)tamanhoString);
 }
 
-int particionar(int quantidadeStrings, int tamanhoString, char strings[quantidadeStrings][tamanhoString], int inicio, int fim)
+static int particionar(int quantidadeStrings, int tamanhoString, char strings[quantidadeStrings][tamanhoString], int inicio, int fim)
 {
     int pivo = strings[fim][0];
     int i = inicio - 1;
@@ -50,13 +41,13 @@ int particionar(int quantidadeStrings, int tamanhoString, char strings[quantidad
     return i + 1;
 }
 
-void trocar(int tamanhoString, char stringA[tamanhoString], char stringB[tamanhoString])
+void ordenar(int quantidadeStrings, int tamanhoStrings, char strings[quantidadeStrings][tamanhoStrings], int inicio, int fim)
 {
-    char temporario[tamanhoString];
-
-    memset(temporario, 0, (size_t)tamanhoString);
-
-    memcpy(&temporario, stringA, (size_t)tamanhoString);
-    memcpy(stringA, stringB, (size_t)tamanhoString);
-    memcpy(stringB, temporario, (size_t)tamanhoString);
+    if (inicio < fim)
+    {
+        int i = particionar(quantidadeStrings, tamanhoStrings, strings, inicio, fim);
+        ordenar(quantidadeStrings, tamanhoStrings, strings, inicio, i - 1);
+        ordenar(quantidadeStrings, tamanhoStrings, strings, i + 1, fim);
+    }
 }
+

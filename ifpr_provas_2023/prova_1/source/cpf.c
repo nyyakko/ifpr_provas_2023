@@ -50,7 +50,7 @@ char calcular_verificador(char const* comeco, char const* fim)
 
 int validar_cpf(int tamanhoString, char cpf[tamanhoString])
 {
-    if (strlen(cpf) != 11)                       return CPF_LEN;
+    if (strlen(cpf) != 11)                            return CPF_LEN;
     if (!contem_apenas_numeros(tamanhoString, cpf))   return CPF_ERR;
     if (contem_os_mesmos_numeros(tamanhoString, cpf)) return CPF_SAM;
 
