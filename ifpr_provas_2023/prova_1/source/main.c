@@ -34,9 +34,9 @@
 void validar_cpfs(int quantidadeCpfs, int tamanhoString, char cpfs[quantidadeCpfs][tamanhoString], char cpfsValidos[quantidadeCpfs][tamanhoString],
                   char cpfsInvalidos[quantidadeCpfs][tamanhoString], int* quantidadeValidos, int* quantidadeInvalidos)
 {
-    char fcpf[tamanhoString + 3];
+    char cpfFormatado[tamanhoString + 3];
 
-    memset(fcpf, 0, tamanhoString + 3);
+    memset(cpfFormatado, 0, tamanhoString + 3);
 
     *quantidadeValidos = 0;
     *quantidadeInvalidos = 0;
@@ -50,9 +50,9 @@ void validar_cpfs(int quantidadeCpfs, int tamanhoString, char cpfs[quantidadeCpf
         switch (resultado)
         {
         case CPF_OK:
-            formatar_cpf(tamanhoString, cpfs[i], fcpf);
+            formatar_cpf(tamanhoString, cpfs[i], cpfFormatado);
             estado_cpf(tamanhoString, cpfs[i], ESTADOS_LEN, estados);
-            printf("CPF %s\tvalido, Estado(s): %s\n", fcpf, estados);
+            printf("CPF %s\tvalido, Estado(s): %s\n", cpfFormatado, estados);
             strcpy_s(cpfsValidos[(*quantidadeValidos)++], tamanhoString, cpfs[i]);
             break;
         case CPF_DV1: printf("CPF %s\t\tErro no DV1\n", cpfs[i]); break;
