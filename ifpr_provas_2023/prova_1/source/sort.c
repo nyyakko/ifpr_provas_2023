@@ -8,54 +8,55 @@
 // NÃO ALTERE ABSOLUTAMENTE NADA NOS CABEÇALHOS (ASSINATURAS) DAS FUNÇÕES
 //
 // =============================================================================
-int particionar(int max_items, int item_len, char arr[max_items][item_len], int inicio, int fim);
 
-void trocar(int item_len, char s1[item_len], char s2[item_len]);
+int particionar(int quantidadeStrings, int tamanhoString, char strings[quantidadeStrings][tamanhoString], int inicio, int fim);
+void trocar(int tamanhoString, char stringA[tamanhoString], char stringB[tamanhoString]);
 
 // =============================================================================
 //
 // NÃO ALTERE ABSOLUTAMENTE NADA NOS CABEÇALHOS (ASSINATURAS) DAS FUNÇÕES
 //
 // =============================================================================
-void ordenar(int max_items, int item_len, char arr[max_items][item_len], int inicio, int fim)
+
+void ordenar(int quantidadeStrings, int tamanhoStrings, char strings[quantidadeStrings][tamanhoStrings], int inicio, int fim)
 {
     if (inicio < fim)
     {
-        int p = particionar(max_items, item_len, arr, inicio, fim);
-        ordenar(max_items, item_len, arr, inicio, p - 1);
-        ordenar(max_items, item_len, arr, p + 1, fim);
+        int i = particionar(quantidadeStrings, tamanhoStrings, strings, inicio, fim);
+        ordenar(quantidadeStrings, tamanhoStrings, strings, inicio, i - 1);
+        ordenar(quantidadeStrings, tamanhoStrings, strings, i + 1, fim);
     }
 }
 
-int particionar(int max_items, int item_len, char arr[max_items][item_len], int inicio, int fim)
+int particionar(int quantidadeStrings, int tamanhoString, char strings[quantidadeStrings][tamanhoString], int inicio, int fim)
 {
-    int pivot = arr[fim][0];
+    int pivo = strings[fim][0];
     int i = inicio - 1;
 
-    for (int j = inicio; j != max_items - 1; j += 1)
+    for (int j = inicio; j != quantidadeStrings - 1; j += 1)
     {
-        if (arr[j][0] < pivot)
+        if (strings[j][0] < pivo)
         {
             i += 1;
-            trocar(item_len, arr[i], arr[j]);
+            trocar(tamanhoString, strings[i], strings[j]);
         }
     }
 
-    if (pivot < arr[i + 1][0])
+    if (pivo < strings[i + 1][0])
     {
-        trocar(item_len, arr[i + 1], arr[fim]);
+        trocar(tamanhoString, strings[i + 1], strings[fim]);
     }
 
     return i + 1;
 }
 
-void trocar(int item_len, char s1[item_len], char s2[item_len])
+void trocar(int tamanhoString, char stringA[tamanhoString], char stringB[tamanhoString])
 {
-    char temp[item_len];
+    char temporario[tamanhoString];
 
-    memset(temp, 0, (size_t)item_len);
+    memset(temporario, 0, (size_t)tamanhoString);
 
-    memcpy(&temp, s1, (size_t)item_len);
-    memcpy(s1, s2, (size_t)item_len);
-    memcpy(s2, temp, (size_t)item_len);
+    memcpy(&temporario, stringA, (size_t)tamanhoString);
+    memcpy(stringA, stringB, (size_t)tamanhoString);
+    memcpy(stringB, temporario, (size_t)tamanhoString);
 }

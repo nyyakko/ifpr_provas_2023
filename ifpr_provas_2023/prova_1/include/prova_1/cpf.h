@@ -6,6 +6,7 @@
 // NÃO ALTERE ABSOLUTAMENTE NADA NESTE ARQUIVO
 //
 // =============================================================================
+
 #define ESTADOS_LEN 256
 
 #define CPF_OK 0   // CPF válido
@@ -15,8 +16,8 @@
 #define CPF_SAM -4 // Todos os dígitos do CPF são iguais
 #define CPF_ERR -5 // Qualquer outro erro
 
-int validar_cpf(int item_len, char cpf[item_len]);
-void formatar_cpf(int item_len, char cpf[item_len], char fcpf[item_len + 3]);
-void estado_cpf(int item_len, char cpf[item_len], int estados_len, char estados[estados_len]);
+int validar_cpf(int tamanhoString, char cpf[tamanhoString]);
+void formatar_cpf(int tamanhoString, char cpf[tamanhoString], char cpfFormatado[tamanhoString + 3]);
+void estado_cpf(int tamanhoString, char cpf[tamanhoString], int quantidadeEstados, char estados[quantidadeEstados]);
 
 #endif // __CPF_H

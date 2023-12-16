@@ -14,8 +14,9 @@
 // NÃO ALTERE ABSOLUTAMENTE NADA NOS CABEÇALHOS (ASSINATURAS) DAS FUNÇÕES
 //
 // =============================================================================
-int contem_apenas_numeros(int item_len, char s[item_len]);
-int contem_os_mesmos_numeros(int item_len, char s[item_len]);
+
+int contem_apenas_numeros(int tamanhoString, char string[tamanhoString]);
+int contem_os_mesmos_numeros(int tamanhoString, char string[tamanhoString]);
 
 // =============================================================================
 //
@@ -23,35 +24,35 @@ int contem_os_mesmos_numeros(int item_len, char s[item_len]);
 //
 // =============================================================================
 
-char calcular_verificador(char const* begin, char const* end)
+char calcular_verificador(char const* comeco, char const* fim)
 {
-    int verifier = 0;
-    int distance = (int)(2 + end - begin);
+    int verificador = 0;
+    int distancia = (int)(2 + fim - comeco);
 
-    for (char const* position = begin; position <= end; ++position)
+    for (char const* position = comeco; position <= fim; ++position)
     {
         if (!isdigit(*position))
         {
             continue;
         }
 
-        verifier += (distance * TO_INT(*position));
-        distance -= 1;
+        verificador += (distancia * TO_INT(*position));
+        distancia -= 1;
     }
 
-    if (verifier % 11 < 2)
+    if (verificador % 11 < 2)
     {
         return TO_CHR(0);
     }
 
-    return (char)TO_CHR(11 - verifier % 11);
+    return (char)TO_CHR(11 - verificador % 11);
 }
 
-int validar_cpf(int item_len, char cpf[item_len])
+int validar_cpf(int tamanhoString, char cpf[tamanhoString])
 {
     if (strlen(cpf) != 11)                       return CPF_LEN;
-    if (!contem_apenas_numeros(item_len, cpf))   return CPF_ERR;
-    if (contem_os_mesmos_numeros(item_len, cpf)) return CPF_SAM;
+    if (!contem_apenas_numeros(tamanhoString, cpf))   return CPF_ERR;
+    if (contem_os_mesmos_numeros(tamanhoString, cpf)) return CPF_SAM;
 
     if (cpf[9] == calcular_verificador(&cpf[0], &cpf[8]) && cpf[10] == calcular_verificador(&cpf[0], &cpf[9]))
     {
@@ -75,19 +76,19 @@ int validar_cpf(int item_len, char cpf[item_len])
     return CPF_ERR;
 }
 
-void formatar_cpf(int item_len, char cpf[item_len], char fcpf[item_len + 3])
+void formatar_cpf(int tamanhoString, char cpf[tamanhoString], char cpfFormatado[tamanhoString + 3])
 {
-    char wildcard[] = "XXX.XXX.XXX-XX";
+    char formato[] = "XXX.XXX.XXX-XX";
 
-    memcpy(wildcard, cpf, 3);
-    memcpy(wildcard + 4, cpf + 3, 3);
-    memcpy(wildcard + 8, cpf + 6, 3);
-    memcpy(wildcard + 12, cpf + 9, 2);
+    memcpy(formato, cpf, 3);
+    memcpy(formato + 4, cpf + 3, 3);
+    memcpy(formato + 8, cpf + 6, 3);
+    memcpy(formato + 12, cpf + 9, 2);
 
-    memcpy(fcpf, wildcard, sizeof(wildcard));
+    memcpy(cpfFormatado, formato, sizeof(formato));
 }
 
-void estado_cpf(int item_len, char cpf[item_len], int estados_len, char estados[estados_len])
+void estado_cpf(int tamanhoString, char cpf[tamanhoString], int quantidadeEstados, char estados[quantidadeEstados])
 {
     switch (TO_INT(cpf[8]))
     {
@@ -106,29 +107,29 @@ void estado_cpf(int item_len, char cpf[item_len], int estados_len, char estados[
     memcpy(estados, FROM_STR("*-*-*"));
 }
 
-int contem_apenas_numeros(int item_len, char s[item_len])
+int contem_apenas_numeros(int tamanhoString, char string[tamanhoString])
 {
-    for (int i = 0; i != item_len - 1; i += 1)
+    for (int i = 0; i != tamanhoString - 1; i += 1)
     {
-        if (!isdigit(s[i])) return 0;
+        if (!isdigit(string[i])) return 0;
     }
 
     return 1;
 }
 
-int contem_os_mesmos_numeros(int item_len, char s[item_len])
+int contem_os_mesmos_numeros(int tamanhoString, char string[tamanhoString])
 {
-    int count = 0;
-    int lastSeen = 0;
+    int vezesVisto  = 0;
+    int ultimoVisto = 0;
 
-    for (int i = 0; i != item_len - 1; i += 1)
+    for (int i = 0; i != tamanhoString - 1; i += 1)
     {
-        if (!lastSeen) lastSeen = s[i];
+        if (!ultimoVisto) ultimoVisto = string[i];
 
-        if (lastSeen == s[i])
+        if (ultimoVisto == string[i])
         {
-            lastSeen = s[i];
-            count += 1;
+            ultimoVisto = string[i];
+            vezesVisto += 1;
         }
         else
         {
@@ -136,5 +137,5 @@ int contem_os_mesmos_numeros(int item_len, char s[item_len])
         }
     }
 
-    return count == item_len - 1;
+    return vezesVisto == tamanhoString - 1;
 }

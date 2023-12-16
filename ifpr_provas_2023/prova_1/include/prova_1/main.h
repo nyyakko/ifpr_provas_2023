@@ -6,6 +6,7 @@
 // NÃO ALTERE ABSOLUTAMENTE NADA NESTE ARQUIVO
 //
 // =============================================================================
+
 #define ITEM_LEN  12
 #define MAX_ITEMS 10
 
