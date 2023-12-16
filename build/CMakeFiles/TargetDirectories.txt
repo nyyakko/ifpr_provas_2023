@@ -1,0 +1,9 @@
+C:/Users/nyako/Git/ifpr_provas_2023/build/CMakeFiles/edit_cache.dir
+C:/Users/nyako/Git/ifpr_provas_2023/build/CMakeFiles/rebuild_cache.dir
+C:/Users/nyako/Git/ifpr_provas_2023/build/ifpr_provas_2023/CMakeFiles/edit_cache.dir
+C:/Users/nyako/Git/ifpr_provas_2023/build/ifpr_provas_2023/CMakeFiles/rebuild_cache.dir
+C:/Users/nyako/Git/ifpr_provas_2023/build/ifpr_provas_2023/prova_1/CMakeFiles/prova_1.dir
+C:/Users/nyako/Git/ifpr_provas_2023/build/ifpr_provas_2023/prova_1/CMakeFiles/edit_cache.dir
+C:/Users/nyako/Git/ifpr_provas_2023/build/ifpr_provas_2023/prova_1/CMakeFiles/rebuild_cache.dir
+C:/Users/nyako/Git/ifpr_provas_2023/build/ifpr_provas_2023/prova_1/source/CMakeFiles/edit_cache.dir
+C:/Users/nyako/Git/ifpr_provas_2023/build/ifpr_provas_2023/prova_1/source/CMakeFiles/rebuild_cache.dir

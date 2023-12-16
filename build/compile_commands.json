@@ -1,0 +1,20 @@
+[
+{
+  "directory": "C:/Users/nyako/Git/ifpr_provas_2023/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang.exe -IC:/Users/nyako/Git/ifpr_provas_2023/ifpr_provas_2023/prova_1/include -IC:/Users/nyako/Git/ifpr_provas_2023/ifpr_provas_2023/prova_1/include/prova_1 -O0 -g -Xclang -gcodeview -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu2x -o ifpr_provas_2023\\prova_1\\CMakeFiles\\prova_1.dir\\source\\main.c.obj -c C:\\Users\\nyako\\Git\\ifpr_provas_2023\\ifpr_provas_2023\\prova_1\\source\\main.c",
+  "file": "C:\\Users\\nyako\\Git\\ifpr_provas_2023\\ifpr_provas_2023\\prova_1\\source\\main.c",
+  "output": "ifpr_provas_2023\\prova_1\\CMakeFiles\\prova_1.dir\\source\\main.c.obj"
+},
+{
+  "directory": "C:/Users/nyako/Git/ifpr_provas_2023/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang.exe -IC:/Users/nyako/Git/ifpr_provas_2023/ifpr_provas_2023/prova_1/include -IC:/Users/nyako/Git/ifpr_provas_2023/ifpr_provas_2023/prova_1/include/prova_1 -O0 -g -Xclang -gcodeview -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu2x -o ifpr_provas_2023\\prova_1\\CMakeFiles\\prova_1.dir\\source\\sort.c.obj -c C:\\Users\\nyako\\Git\\ifpr_provas_2023\\ifpr_provas_2023\\prova_1\\source\\sort.c",
+  "file": "C:\\Users\\nyako\\Git\\ifpr_provas_2023\\ifpr_provas_2023\\prova_1\\source\\sort.c",
+  "output": "ifpr_provas_2023\\prova_1\\CMakeFiles\\prova_1.dir\\source\\sort.c.obj"
+},
+{
+  "directory": "C:/Users/nyako/Git/ifpr_provas_2023/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang.exe -IC:/Users/nyako/Git/ifpr_provas_2023/ifpr_provas_2023/prova_1/include -IC:/Users/nyako/Git/ifpr_provas_2023/ifpr_provas_2023/prova_1/include/prova_1 -O0 -g -Xclang -gcodeview -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu2x -o ifpr_provas_2023\\prova_1\\CMakeFiles\\prova_1.dir\\source\\cpf.c.obj -c C:\\Users\\nyako\\Git\\ifpr_provas_2023\\ifpr_provas_2023\\prova_1\\source\\cpf.c",
+  "file": "C:\\Users\\nyako\\Git\\ifpr_provas_2023\\ifpr_provas_2023\\prova_1\\source\\cpf.c",
+  "output": "ifpr_provas_2023\\prova_1\\CMakeFiles\\prova_1.dir\\source\\cpf.c.obj"
+}
+]
