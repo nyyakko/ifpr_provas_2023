@@ -119,23 +119,10 @@ int contem_apenas_numeros(int tamanhoString, char string[tamanhoString])
 
 int contem_os_mesmos_numeros(int tamanhoString, char string[tamanhoString])
 {
-    int vezesVisto  = 0;
-    int ultimoVisto = 0;
-
     for (int i = 0; i != tamanhoString - 1; i += 1)
     {
-        if (!ultimoVisto) ultimoVisto = string[i];
-
-        if (ultimoVisto == string[i])
-        {
-            ultimoVisto = string[i];
-            vezesVisto += 1;
-        }
-        else
-        {
-            return 0;
-        }
+        if (string[0] != string[i]) return 0;
     }
 
-    return vezesVisto == tamanhoString - 1;
+    return 1;
 }
