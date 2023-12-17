@@ -15,8 +15,8 @@
 //
 // =============================================================================
 
-int contem_apenas_numeros(int tamanhoString, char string[tamanhoString]);
-int contem_os_mesmos_numeros(int tamanhoString, char string[tamanhoString]);
+int contem_apenas_numeros(char cpf[CPF_LEN]);
+int contem_os_mesmos_numeros(char cpf[CPF_LEN]);
 
 // =============================================================================
 //
@@ -27,7 +27,7 @@ int contem_os_mesmos_numeros(int tamanhoString, char string[tamanhoString]);
 char calcular_verificador(char const* comeco, char const* fim)
 {
     int verificador = 0;
-    int distancia = (int)(2 + fim - comeco);
+    int distancia   = (int)(2 + fim - comeco);
 
     for (char const* position = comeco; position <= fim; ++position)
     {
@@ -48,35 +48,35 @@ char calcular_verificador(char const* comeco, char const* fim)
     return (char)TO_CHR(11 - verificador % 11);
 }
 
-int validar_cpf(int tamanhoString, char cpf[tamanhoString])
+int validar_cpf(char cpf[CPF_LEN])
 {
-    if (strlen(cpf) != 11)                            return CPF_LEN;
-    if (!contem_apenas_numeros(tamanhoString, cpf))   return CPF_ERR;
-    if (contem_os_mesmos_numeros(tamanhoString, cpf)) return CPF_SAM;
+    if (strlen(cpf) != 11)                      return CPF_E_LEN;
+    if (!contem_apenas_numeros(cpf))   return CPF_E_UNK;
+    if (contem_os_mesmos_numeros(cpf)) return CPF_E_SAM;
 
     if (cpf[9] == calcular_verificador(&cpf[0], &cpf[8]) && cpf[10] == calcular_verificador(&cpf[0], &cpf[9]))
     {
-        return CPF_OK;
+        return CPF_E_OK;
     }
     else
     {
         if (cpf[9] != calcular_verificador(&cpf[0], &cpf[8]))
         {
-            return CPF_DV1;
+            return CPF_E_DV1;
         }
 
         if (cpf[10] != calcular_verificador(&cpf[0], &cpf[9]))
         {
-            return CPF_DV2;
+            return CPF_E_DV2;
         }
     }
 
     assert(false && "UNREACHABLE");
 
-    return CPF_ERR;
+    return CPF_E_UNK;
 }
 
-void formatar_cpf(int tamanhoString, char cpf[tamanhoString], char cpfFormatado[tamanhoString + 3])
+void formatar_cpf(char cpf[CPF_LEN], char cpfFormatado_o[CPF_LEN + 3])
 {
     char formato[] = "XXX.XXX.XXX-XX";
 
@@ -85,43 +85,43 @@ void formatar_cpf(int tamanhoString, char cpf[tamanhoString], char cpfFormatado[
     memcpy(formato + 8, cpf + 6, 3);
     memcpy(formato + 12, cpf + 9, 2);
 
-    memcpy(cpfFormatado, formato, sizeof(formato));
+    memcpy(cpfFormatado_o, formato, sizeof(formato));
 }
 
-void estado_cpf(int tamanhoString, char cpf[tamanhoString], int quantidadeEstados, char estados[quantidadeEstados])
+void estado_cpf(char cpf[CPF_LEN], char estados_o[ESTADOS_LEN])
 {
     switch (TO_INT(cpf[8]))
     {
-    case 0: memcpy(estados, FROM_STR("RS")); return;
-    case 1: memcpy(estados, FROM_STR("DF, GO, MT, MS or TO")); return;
-    case 2: memcpy(estados, FROM_STR("AM, PA, RO, AM, AC or RO")); return;
-    case 3: memcpy(estados, FROM_STR("CE, MA ou PI")); return;
-    case 4: memcpy(estados, FROM_STR("PA, PE, AL ou RN")); return;
-    case 5: memcpy(estados, FROM_STR("BA ou SE")); return;
-    case 6: memcpy(estados, FROM_STR("MG")); return;
-    case 7: memcpy(estados, FROM_STR("RJ ou ES")); return;
-    case 8: memcpy(estados, FROM_STR("SP")); return;
-    case 9: memcpy(estados, FROM_STR("PR ou SC")); return;
+    case 0: memcpy(estados_o, FROM_STR("RS")); return;
+    case 1: memcpy(estados_o, FROM_STR("DF, GO, MT, MS or TO")); return;
+    case 2: memcpy(estados_o, FROM_STR("AM, PA, RO, AM, AC or RO")); return;
+    case 3: memcpy(estados_o, FROM_STR("CE, MA ou PI")); return;
+    case 4: memcpy(estados_o, FROM_STR("PA, PE, AL ou RN")); return;
+    case 5: memcpy(estados_o, FROM_STR("BA ou SE")); return;
+    case 6: memcpy(estados_o, FROM_STR("MG")); return;
+    case 7: memcpy(estados_o, FROM_STR("RJ ou ES")); return;
+    case 8: memcpy(estados_o, FROM_STR("SP")); return;
+    case 9: memcpy(estados_o, FROM_STR("PR ou SC")); return;
     }
 
-    memcpy(estados, FROM_STR("*-*-*"));
+    memcpy(estados_o, FROM_STR("*-*-*"));
 }
 
-int contem_apenas_numeros(int tamanhoString, char string[tamanhoString])
+int contem_apenas_numeros(char cpf[CPF_LEN])
 {
-    for (int i = 0; i != tamanhoString - 1; i += 1)
+    for (int i = 0; i != CPF_LEN - 1; i += 1)
     {
-        if (!isdigit(string[i])) return 0;
+        if (!isdigit(cpf[i])) return 0;
     }
 
     return 1;
 }
 
-int contem_os_mesmos_numeros(int tamanhoString, char string[tamanhoString])
+int contem_os_mesmos_numeros(char cpf[CPF_LEN])
 {
-    for (int i = 0; i != tamanhoString - 1; i += 1)
+    for (int i = 0; i != CPF_LEN - 1; i += 1)
     {
-        if (string[0] != string[i]) return 0;
+        if (cpf[0] != cpf[i]) return 0;
     }
 
     return 1;

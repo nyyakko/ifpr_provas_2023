@@ -8,46 +8,46 @@
 //
 // =============================================================================
 
-static void trocar(int tamanhoString, char stringA[tamanhoString], char stringB[tamanhoString])
+static void trocar(char stringA_o[CPF_LEN], char stringB_o[CPF_LEN])
 {
-    char temporario[tamanhoString];
+    char temporario[CPF_LEN];
 
-    memset(temporario, 0, (size_t)tamanhoString);
+    memset(temporario, 0, (size_t)CPF_LEN);
 
-    memcpy(&temporario, stringA, (size_t)tamanhoString);
-    memcpy(stringA, stringB, (size_t)tamanhoString);
-    memcpy(stringB, temporario, (size_t)tamanhoString);
+    memcpy(&temporario, stringA_o, (size_t)CPF_LEN);
+    memcpy(stringA_o, stringB_o, (size_t)CPF_LEN);
+    memcpy(stringB_o, temporario, (size_t)CPF_LEN);
 }
 
-static int particionar(int quantidadeStrings, int tamanhoString, char strings[quantidadeStrings][tamanhoString], int inicio, int fim)
+static int particionar(int quantidadeStrings, char strings_o[quantidadeStrings][CPF_LEN], int inicio, int fim)
 {
-    int pivo = strings[fim][0];
+    int pivo = strings_o[fim][0];
     int i = inicio - 1;
 
     for (int j = inicio; j != quantidadeStrings - 1; j += 1)
     {
-        if (strings[j][0] < pivo)
+        if (strings_o[j][0] < pivo)
         {
             i += 1;
-            trocar(tamanhoString, strings[i], strings[j]);
+            trocar(strings_o[i], strings_o[j]);
         }
     }
 
-    if (pivo < strings[i + 1][0])
+    if (pivo < strings_o[i + 1][0])
     {
-        trocar(tamanhoString, strings[i + 1], strings[fim]);
+        trocar(strings_o[i + 1], strings_o[fim]);
     }
 
     return i + 1;
 }
 
-void ordenar(int quantidadeStrings, int tamanhoStrings, char strings[quantidadeStrings][tamanhoStrings], int inicio, int fim)
+void ordenar(int quantidadeStrings, char strings_o[quantidadeStrings][CPF_LEN], int inicio, int fim)
 {
     if (inicio < fim)
     {
-        int i = particionar(quantidadeStrings, tamanhoStrings, strings, inicio, fim);
-        ordenar(quantidadeStrings, tamanhoStrings, strings, inicio, i - 1);
-        ordenar(quantidadeStrings, tamanhoStrings, strings, i + 1, fim);
+        int i = particionar(quantidadeStrings, strings_o, inicio, fim);
+        ordenar(quantidadeStrings, strings_o, inicio, i - 1);
+        ordenar(quantidadeStrings, strings_o, i + 1, fim);
     }
 }
 

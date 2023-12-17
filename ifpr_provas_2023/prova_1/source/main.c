@@ -31,42 +31,50 @@
 // total_invalidos: quantidade de CPFs inválidos
 // =============================================================================
 
-void validar_cpfs(int quantidadeCpfs, int tamanhoString, char cpfs[quantidadeCpfs][tamanhoString], char cpfsValidos[quantidadeCpfs][tamanhoString],
-                  char cpfsInvalidos[quantidadeCpfs][tamanhoString], int* quantidadeValidos, int* quantidadeInvalidos)
+struct pair_t
 {
-    char cpfFormatado[tamanhoString + 3];
+    int first;
+    int second;
+};
 
-    memset(cpfFormatado, 0, tamanhoString + 3);
+struct pair_t validar_cpfs(char cpfs[MAX_ITEMS][CPF_LEN], char cpfsValidos_o[MAX_ITEMS][CPF_LEN], char cpfsInvalidos_o[MAX_ITEMS][CPF_LEN])
+{
+    struct pair_t resultado = {0};
 
-    *quantidadeValidos = 0;
-    *quantidadeInvalidos = 0;
-
-    for (int i = 0; i != quantidadeCpfs; i += 1)
+    for (int i = 0; i != MAX_ITEMS; i += 1)
     {
-        int resultado = validar_cpf(tamanhoString, cpfs[i]);
+        int resultadoValidacao = validar_cpf(cpfs[i]);
 
-        char estados[ESTADOS_LEN] = {0};
-
-        switch (resultado)
+        switch (resultadoValidacao)
         {
-        case CPF_OK:
-            formatar_cpf(tamanhoString, cpfs[i], cpfFormatado);
-            estado_cpf(tamanhoString, cpfs[i], ESTADOS_LEN, estados);
+        case CPF_E_OK:
+        {
+            char cpfFormatado[CPF_LEN + 3];
+            memset(cpfFormatado, 0, CPF_LEN + 3);
+            formatar_cpf(cpfs[i], cpfFormatado);
+
+            char estados[ESTADOS_LEN] = {0};
+            estado_cpf(cpfs[i], estados);
             printf("CPF %s\tvalido, Estado(s): %s\n", cpfFormatado, estados);
-            strcpy_s(cpfsValidos[(*quantidadeValidos)++], tamanhoString, cpfs[i]);
+
+            strcpy_s(cpfsValidos_o[(resultado.first)++], CPF_LEN, cpfs[i]);
+
             break;
-        case CPF_DV1: printf("CPF %s\t\tErro no DV1\n", cpfs[i]); break;
-        case CPF_DV2: printf("CPF %s\t\tErro no DV2\n", cpfs[i]); break;
-        case CPF_LEN: printf("CPF %s\t\tNão tem 11 digitos\n", cpfs[i]); break;
-        case CPF_SAM: printf("CPF %s\t\tCom todos os digitos iguais\n", cpfs[i]); break;
-        case CPF_ERR: printf("CPF %s\t\tErro desconhecido\n", cpfs[i]); break;
+        }
+        case CPF_E_DV1: printf("CPF %s\t\tErro no DV1\n", cpfs[i]); break;
+        case CPF_E_DV2: printf("CPF %s\t\tErro no DV2\n", cpfs[i]); break;
+        case CPF_E_LEN: printf("CPF %s\t\tNão tem 11 digitos\n", cpfs[i]); break;
+        case CPF_E_SAM: printf("CPF %s\t\tCom todos os digitos iguais\n", cpfs[i]); break;
+        case CPF_E_UNK: printf("CPF %s\t\tErro desconhecido\n", cpfs[i]); break;
         }
 
-        if (resultado != CPF_OK)
+        if (resultadoValidacao != CPF_E_OK)
         {
-            strcpy_s(cpfsInvalidos[(*quantidadeInvalidos)++], tamanhoString, cpfs[i]);
+            strcpy_s(cpfsInvalidos_o[(resultado.second)++], CPF_LEN, cpfs[i]);
         }
     }
+
+    return resultado;
 }
 
 // =============================================================================
@@ -74,9 +82,9 @@ void validar_cpfs(int quantidadeCpfs, int tamanhoString, char cpfs[quantidadeCpf
 // encontra
 // =============================================================================
 
-void mostrar(int quantidadeCpfs, int tamanhoString, char cpfs[quantidadeCpfs][tamanhoString])
+void mostrar(int quantidadeStrings, char cpfs[quantidadeStrings][CPF_LEN])
 {
-    for (int i = 0; i != quantidadeCpfs; i += 1)
+    for (int i = 0; i != quantidadeStrings; i += 1)
     {
         printf("[%2d]: %s\n", i + 1, cpfs[i]);
     }
@@ -88,7 +96,7 @@ int main()
 
 #if 0
     // matriz de CPFs válidos
-    char cpfs[MAX_ITEMS][ITEM_LEN] =
+    char cpfs[MAX_ITEMS][CPF_LEN] =
     {
         "40207576238", // 0
         "41964254027", // 1
@@ -103,7 +111,7 @@ int main()
     };
 #else
     // matriz de CPFs contendo 5 válidos e 5 inválidos
-    char cpfs[MAX_ITEMS][ITEM_LEN] =
+    char cpfs[MAX_ITEMS][CPF_LEN] =
     {
         "40207576238", // 0
         "41964254007", // 1
@@ -118,25 +126,23 @@ int main()
     };
 #endif
 
-    char cpfsValidos[MAX_ITEMS][ITEM_LEN] = {0};
-    char cpfsInvalidos[MAX_ITEMS][ITEM_LEN] = {0};
-    int quantidadeValidos = 0;
-    int quantidadeInvalidos = 0;
+    printf("===> VALIDAR CPFs <===\n\n");
 
-    // seção para validar CPFs
-    printf("===> VALIDAR CPFs <===\n");
-    validar_cpfs(MAX_ITEMS, ITEM_LEN, cpfs, cpfsValidos, cpfsInvalidos, &quantidadeValidos, &quantidadeInvalidos);
-    printf("\nCPFs válidos..: %2d\n", quantidadeValidos);
-    printf("CPFs inválidos: %2d\n\n", quantidadeInvalidos);
+    char cpfsValidos[MAX_ITEMS][CPF_LEN] = {0};
+    char cpfsInvalidos[MAX_ITEMS][CPF_LEN] = {0};
 
-    // seção para mostrar somente os CPFs válidos antes da ordenação
-    printf("\n===> SOMENTE CPFs VÁLIDOS <===\n");
+    struct pair_t resultado = validar_cpfs(cpfs, cpfsValidos, cpfsInvalidos);
+
+    printf("\nCPFs válidos..: %2d\n", resultado.first);
+    printf("CPFs inválidos: %2d\n\n", resultado.second);
+
+    printf("\n===> SOMENTE CPFs VÁLIDOS <===\n\n");
+
     printf("===> ANTES DE ORDENAR <===\n");
-    mostrar(quantidadeValidos, ITEM_LEN, cpfsValidos);
+    mostrar(resultado.first, cpfsValidos);
 
-    // seção para mostrar somente os CPFs válidos depis da ordenação
     printf("\n===> DEPOIS DE ORDENAR <===\n");
-    ordenar(quantidadeValidos, ITEM_LEN, cpfsValidos, 0, quantidadeValidos - 1);
-    mostrar(quantidadeValidos, ITEM_LEN, cpfsValidos);
+    ordenar(resultado.first, cpfsValidos, 0, resultado.first - 1);
+    mostrar(resultado.first, cpfsValidos);
 }
 
