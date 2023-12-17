@@ -49,8 +49,7 @@ struct pair_t validar_cpfs(char cpfs[MAX_ITEMS][CPF_LEN], char cpfsValidos_o[MAX
         {
         case CPF_E_OK:
         {
-            char cpfFormatado[CPF_LEN + 3];
-            memset(cpfFormatado, 0, CPF_LEN + 3);
+            char cpfFormatado[CPF_LEN + 3] = {0};
             formatar_cpf(cpfs[i], cpfFormatado);
 
             char estados[ESTADOS_LEN] = {0};
